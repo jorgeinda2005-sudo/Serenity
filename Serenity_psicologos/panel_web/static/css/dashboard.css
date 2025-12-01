@@ -1,0 +1,68 @@
+:root {
+    --color-primary: #007bff;
+    --color-secondary: #6c757d;
+    --color-success: #28a745;
+    --color-danger: #dc3545;
+    --color-info: #17a2b8;
+    --font-family-sans-serif: 'Arial', sans-serif; 
+}
+
+body {
+    background-color: #ffffff; 
+    font-family: var(--font-family-sans-serif);
+}
+
+.main-header {
+    background-color: #ffffff; 
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    position: sticky;
+    top: 0;
+    z-index: 1020; 
+}
+
+.main-header .text-primary {
+    color: var(--color-primary) !important;
+}
+
+.card {
+    border-radius: 1rem; 
+}
+.metric-box {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: 1px solid #e9ecef; 
+}
+
+.metric-box:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+
+.metric-box .fa-users { color: var(--color-success); }
+.metric-box .fa-exclamation-triangle { color: var(--color-danger); }
+.metric-box .fa-chart-line { color: var(--color-info); }
+
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+.logoweb{
+    width: 100%;
+    height: 100%;
+    background-color: #0056b3;
+    border: 5px blue;
+}
+.logoweb:hover{
+    transform: scale(1.1);
+    background-color: #28a745;
+    transition: transform 0.3s ease;
+}
+img:hover{
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+

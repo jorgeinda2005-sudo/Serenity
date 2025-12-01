@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity | UNACAR FCI</title>
+
+    <link rel="icon" href="{{ url_for('static', filename='img/serenity.jpg') }}" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/alertas.css') }}">
+</head>
+
+<body>
+
+<header class="main-header border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center p-3">
+
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-dark me-3">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a class="logoweb" href="{{ url_for('dashboard') }}">
+                <img src="{{ url_for('static', filename='img/serenity.jpg') }}" alt="Logo Serenity" class="img-fluid" style="max-height: 40px;">
+            </a>
+
+            <h1 class="h4 mb-0 fw-bold text-primary ms-2">Serenity</h1>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <img src="{{ url_for('static', filename='img/escudo_unacar.png') }}" class="img-fluid logo-small me-3">
+            <img src="{{ url_for('static', filename='img/Globo.jpg') }}" class="img-fluid logo-small">
+        </div>
+    </div>
+</header>
+
+<main class="container-fluid py-4">
+
+    <h2 class="mb-4 fw-bold text-danger">
+        <i class="fas fa-exclamation-triangle me-2"></i> 🚨 Alertas Detectadas
+    </h2>
+
+    <div class="card filter-card shadow-sm mb-4">
+        <div class="card-body">
+
+            <form method="GET" class="row g-3 align-items-end">
+
+                <div class="col-md-3">
+                    <label class="form-label text-muted small">Buscar</label>
+                    <input name="buscar" class="form-control" placeholder="Nombre, ID o descripción..." value="{{buscar}}">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label text-muted small">Tipo de Alerta</label>
+                    <select name="tipo" class="form-select">
+                        <option value="">Todos los Tipos</option>
+                        <option value="suicidio" {% if tipo=="suicidio" %}selected{% endif %}>Suicidio</option>
+                        <option value="depresion" {% if tipo=="depresion" %}selected{% endif %}>Depresión</option>
+                        <option value="violencia" {% if tipo=="violencia" %}selected{% endif %}>Violencia</option>
+                        <option value="abuso" {% if tipo=="abuso" %}selected{% endif %}>Abuso sexual</option>
+                        <option value="drogadiccion" {% if tipo=="drogadiccion" %}selected{% endif %}>Drogadicción</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label text-muted small">Desde</label>
+                    <input type="date" class="form-control" name="inicio" value="{{inicio}}">
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label text-muted small">Hasta</label>
+                    <input type="date" class="form-control" name="fin" value="{{fin}}">
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-danger w-100 fw-bold">
+                        <i class="fas fa-search me-1"></i> Filtrar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle data-table">
+            <thead class="table-danger">
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Fecha / Hora</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for a in datos %}
+                <tr>
+                    <td class="fw-bold">{{a[0]}}</td>
+                    <td>{{a[1]}}</td>
+                    <td><span class="badge rounded-pill bg-danger-subtle text-danger p-2">{{a[2]}}</span></td>
+                    <td>{{a[3]}}</td>
+                    <td class="text-muted small">{{a[4]}}</td>
+                </tr>
+                {% endfor %}
+
+                {% if not datos %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted p-4">
+                        <i class="fas fa-info-circle me-2"></i> No se encontraron alertas.
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary shadow-sm mt-4">
+        <i class="fas fa-arrow-left me-2"></i> Volver al Panel
+    </a>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

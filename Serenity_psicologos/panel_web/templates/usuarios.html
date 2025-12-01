@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity | UNACAR FCI</title>
+
+    <link rel="icon" href="{{ url_for('static', filename='img/serenity.jpg') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuarios.css') }}">
+</head>
+
+<body>
+
+<header class="main-header border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center p-3">
+
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-dark me-3">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="{{ url_for('dashboard') }}">
+                <img src="{{ url_for('static', filename='img/serenity.jpg') }}" class="img-fluid" style="max-height:40px;">
+            </a>
+
+            <h1 class="h4 mb-0 fw-bold text-primary ms-2">Serenity</h1>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <img src="{{ url_for('static', filename='img/escudo_unacar.png') }}" class="img-fluid logo-small me-3">
+            <img src="{{ url_for('static', filename='img/Globo.jpg') }}" class="img-fluid logo-small">
+        </div>
+
+    </div>
+</header>
+
+
+<main class="container-fluid py-4">
+
+    <h2 class="mb-4 fw-bold text-primary">
+        <i class="fas fa-user-friends me-2"></i> Usuarios de Serenity
+    </h2>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <form method="GET" class="d-flex" style="max-width: 400px;">
+            <input name="buscar" class="form-control me-2" placeholder="Buscar por ID o nombre..." value="{{buscar | default('')}}">
+            <button class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+
+        <button class="btn btn-outline-success">
+            <i class="fas fa-file-excel me-2"></i> Exportar
+        </button>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle data-table">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Facultad</th>
+                    <th class="text-center">Mensajes</th>
+                    <th>Última Interacción</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for u in datos %}
+                <tr>
+                    <td class="fw-bold">{{u[0]}}</td>
+
+                    <td>
+                        <i class="fas fa-user-circle me-2 text-primary"></i> {{u[1]}}
+                    </td>
+
+                    <td>
+                        <span class="badge bg-secondary text-light">{{u[2]}}</span>
+                    </td>
+
+                    <td class="text-center">
+                        <span class="badge rounded-pill bg-info-subtle text-info p-2">{{u[3]}}</span>
+                    </td>
+
+                    <td class="text-muted small">{{u[4]}}</td>
+
+                    <td class="text-center">
+                        <a href="/usuario/{{u[0]}}" class="btn btn-primary btn-sm shadow-sm">
+                            <i class="fas fa-eye me-1"></i> Ver Perfil
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                {% if not datos %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted p-4">
+                        <i class="fas fa-info-circle me-2"></i> No se encontraron usuarios.
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+
+        </table>
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary shadow-sm mt-4">
+        <i class="fas fa-arrow-left me-2"></i> Volver
+    </a>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

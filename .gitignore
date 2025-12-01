@@ -1,0 +1,42 @@
+# --- ARCHIVOS SENSIBLES ---
+.env
+*.db
+*.sqlite
+*.sqlite3
+
+# --- ARCHIVOS DEL BOT ---
+excel/
+alertas/
+alertas_generadas/
+conversaciones_excel/
+adjuntos_temp/
+
+# --- TEMPORALES ---
+*.tmp
+*.log
+
+# --- EXCEL / REPORTES ---
+*.xlsx
+*.xls
+*.csv
+*.pdf
+
+# --- PYTHON CACHE ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- VSCODE ---
+.vscode/
+*.code-workspace
+
+# --- SISTEMA ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- ENTORNOS VIRTUALES ---
+venv/
+env/
+.venv/

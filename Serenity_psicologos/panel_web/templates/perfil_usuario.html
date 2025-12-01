@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Serenity | Perfil del Usuario</title>
+
+    <link rel="icon" href="{{ url_for('static', filename='img/serenity.jpg') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+</head>
+
+<body>
+
+<header class="main-header border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center p-3">
+
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-dark me-3">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="{{ url_for('dashboard') }}">
+                <img src="{{ url_for('static', filename='img/serenity.jpg') }}" class="img-fluid" style="max-height:40px;">
+            </a>
+
+            <h1 class="h4 mb-0 fw-bold text-primary ms-2">Serenity</h1>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <img src="{{ url_for('static', filename='img/escudo_unacar.png') }}" class="img-fluid logo-small me-3">
+            <img src="{{ url_for('static', filename='img/Globo.jpg') }}" class="img-fluid logo-small">
+        </div>
+
+    </div>
+</header>
+
+<main class="container py-4">
+
+    <div class="perfil-box">
+        <h2 class="perfil-title">Perfil del usuario: {{nombre}}</h2>
+    </div>
+
+    {% if datos_personales %}
+    <div class="perfil-box">
+        <h4 class="section-title">Datos personales</h4>
+
+        <div class="data-card"><b>Nombre completo:</b> {{datos_personales[0]}}</div>
+        <div class="data-card"><b>Número telefónico:</b> {{datos_personales[1]}}</div>
+        <div class="data-card"><b>Correo institucional:</b> {{datos_personales[2]}}</div>
+        <div class="data-card"><b>Facultad:</b> {{datos_personales[3]}}</div>
+        <div class="data-card"><b>Fecha de registro:</b> {{datos_personales[4]}}</div>
+    </div>
+    {% endif %}
+
+    {% if dependencia %}
+    <div class="perfil-box">
+        <h4 class="section-title">Dependencia emocional</h4>
+
+        <div class="data-card"><b>Nivel:</b> {{dependencia[0]}}</div>
+        <div class="data-card"><b>Puntaje:</b> {{dependencia[1]}}</div>
+        <div class="data-card"><b>Última evaluación:</b> {{dependencia[2]}}</div>
+    </div>
+    {% endif %}
+
+    {% if perfil %}
+    <div class="perfil-box">
+        <h4 class="section-title">Perfil emocional</h4>
+
+        <div class="data-card"><b>Estado emocional predominante:</b> {{perfil[0]}}</div>
+        <div class="data-card"><b>Patrones de expresión:</b> {{perfil[1]}}</div>
+        <div class="data-card"><b>Intención de divulgación:</b> {{perfil[2]}}</div>
+        <div class="data-card"><b>Rasgos de personalidad:</b> {{perfil[3]}}</div>
+        <div class="data-card"><b>Necesidades esperadas:</b> {{perfil[4]}}</div>
+        <div class="data-card"><b>Recomendaciones:</b> {{perfil[5]}}</div>
+        <div class="data-card"><b>Fecha:</b> {{perfil[6]}}</div>
+    </div>
+    {% endif %}
+
+    <div class="perfil-box">
+        <h4 class="section-title text-danger">Alertas identificadas</h4>
+
+        <div class="box-scroll">
+            {% if alertas %}
+                {% for a in alertas %}
+                <div class="data-card alert-card">
+                    <b>{{a[0]}}</b> – Nivel: {{a[1]}} <br>
+                    <span class="text-small">Fecha: {{a[2]}}</span><br>
+                    {{a[3]}}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No hay alertas registradas.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="perfil-box">
+        <h4 class="section-title">Conversación completa</h4>
+
+        <div class="box-scroll">
+            {% for c in chats %}
+                <p><b>Usuario:</b> {{c[0]}}</p>
+                <p><b>Serenity:</b> {{c[1]}}</p>
+                <span class="text-small">{{c[2]}}</span>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+
+    <a href="/usuarios" class="btn btn-secondary mt-3">Volver</a>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

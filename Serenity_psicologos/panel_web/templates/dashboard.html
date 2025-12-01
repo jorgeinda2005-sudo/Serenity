@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity | UNACAR FCI</title>
+
+    <link rel="icon" href="{{ url_for('static', filename='img/serenity.jpg') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body>
+
+<header class="main-header border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center p-3">
+        
+        <div class="d-flex align-items-center">
+            <button class="btn btn-outline-dark me-3" type="button" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="{{ url_for('dashboard') }}">
+                <img src="{{ url_for('static', filename='img/serenity.jpg') }}" alt="Logo" style="max-height: 40px;">
+            </a>
+
+            <h1 class="h4 mb-0 fw-bold text-primary ms-2">Serenity</h1>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <img src="{{ url_for('static', filename='img/escudo_unacar.png') }}" style="max-height: 40px;" class="me-3">
+            <img src="{{ url_for('static', filename='img/Globo.jpg') }}" style="max-height: 40px;">
+        </div>
+    </div>
+</header>
+
+<main class="container mt-5">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            
+            <h2 class="card-title h3 mb-4">
+                <i class="fas fa-user-circle text-primary me-2"></i> Bienvenido, <b>{{ user }}</b>
+            </h2>
+
+            <div class="row text-center g-3">
+                <div class="col-md-4">
+                    <div class="metric-box p-3 bg-light rounded shadow-sm">
+                        <i class="fas fa-users h1 text-success mb-2"></i>
+                        <p class="mb-1 text-muted">Usuarios Registrados</p>
+                        <p class="h4 fw-bold">{{ usuarios }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-box p-3 bg-light rounded shadow-sm">
+                        <i class="fas fa-exclamation-triangle h1 text-danger mb-2"></i>
+                        <p class="mb-1 text-muted">Alertas Detectadas</p>
+                        <p class="h4 fw-bold">{{ alertas }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-box p-3 bg-light rounded shadow-sm">
+                        <i class="fas fa-chart-line h1 text-info mb-2"></i>
+                        <p class="mb-1 text-muted">Perfiles Emocionales Generados</p>
+                        <p class="h4 fw-bold">{{ perfiles }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ url_for('ver_usuarios') }}" class="btn btn-primary btn-lg me-3">Ver Usuarios</a>
+                <a href="{{ url_for('ver_alertas') }}" class="btn btn-danger btn-lg me-3">Ver Alertas</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-lg">Cerrar sesión</a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

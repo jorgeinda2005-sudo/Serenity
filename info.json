@@ -1,0 +1,19 @@
+{
+    "nombre_departamento": "Unidad de Servicios Psicopedagógicos - UNACAR",
+    "ubicacion": "Campus Principal, Plaza Cultural Universitaria, puerta 204",
+    "horario_atencion": "Lunes a Viernes de 9:00 a 14:00 y de 16:00 a 19:00",
+    "servicios": [
+      "Orientación psicológica individual",
+      "Atención en crisis emocional",
+      "Talleres grupales y asesoramiento académico-emocional",
+      "Canalización a especialistas con descuento para estudiantes UNACAR",
+      "Seguimiento psicológico dentro de la institución",
+      "Referencias a instituciones externas como CIJ, DIF y OUVS"
+    ],
+    "contacto": {
+      "correo": "mduarte@delfin.unacar.mx",
+      "telefono": "Por cita previa o dudas (enviar mensaje por correo institucional"
+    },
+    "responsable": "M.T.F. Ma. del Carmen Duarte Cardel"
+  }
+  
