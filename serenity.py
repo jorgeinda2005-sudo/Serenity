@@ -1148,8 +1148,7 @@ async def configurar_webhook():
     await telegram_app.bot.set_webhook(url=WEBHOOK_URL)
     logger.info(f"🌐 Webhook configurado en: {WEBHOOK_URL}")
 
-
-def main():
+async def main():
     global telegram_app
 
     crear_base_datos()
@@ -1158,18 +1157,21 @@ def main():
         raise RuntimeError("Falta TELEGRAM_TOKEN en variables de entorno")
 
     telegram_app = Application.builder().token(TOKEN_TELEGRAM).build()
+
     telegram_app.add_handler(CommandHandler("start", start))
     telegram_app.add_handler(CommandHandler("menu", comando_menu))
     telegram_app.add_handler(CallbackQueryHandler(callback_menu, pattern="menu_.*|del_.*"))
     telegram_app.add_handler(CallbackQueryHandler(consentimiento_callback, pattern="consent_.*"))
     telegram_app.add_handler(CallbackQueryHandler(callback_facultad, pattern="fac_.*"))
     telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, manejar_mensaje))
-    loop = asyncio.get_event_loop()
-    loop.create_task(telegram_app.initialize())
-    loop.create_task(configurar_webhook())
-    loop.create_task(telegram_app.start())
+
+    await telegram_app.initialize()
+    await configurar_webhook()
+    await telegram_app.start()
+
     flask_app.run(host="0.0.0.0", port=10000)
+
 
 if __name__ == "__main__":
     import asyncio
-    main()
+    asyncio.run(main())
