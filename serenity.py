@@ -1114,22 +1114,62 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Gracias por tu confianza.",
         parse_mode="HTML"
     )
+    
+import asyncio
+from flask import Flask, request
+
+WEBHOOK_HOST = os.getenv("WEBHOOK_HOST")
+WEBHOOK_PATH = f"/webhook/{TOKEN_TELEGRAM}"
+WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
+
+flask_app = Flask(__name__)
+
+telegram_app = None
+
+
+@flask_app.route("/", methods=["GET"])
+def home():
+    return "Serenity está vivo 💙", 200
+
+
+@flask_app.route(WEBHOOK_PATH, methods=["POST"])
+def webhook_handler():
+    if request.method == "POST":
+        try:
+            update = Update.de_json(request.get_json(force=True), telegram_app.bot)
+            telegram_app.update_queue.put_nowait(update)
+        except Exception as e:
+            logger.error(f"[Webhook] Error al procesar actualización: {e}")
+        return "OK", 200
+
+
+async def configurar_webhook():
+    await telegram_app.bot.delete_webhook()
+    await telegram_app.bot.set_webhook(url=WEBHOOK_URL)
+    logger.info(f"🌐 Webhook configurado en: {WEBHOOK_URL}")
 
 
 def main():
-    crear_base_datos()
-    if not TOKEN_TELEGRAM:
-        raise RuntimeError("Falta TELEGRAM_TOKEN en .env")
-    app = Application.builder().token(TOKEN_TELEGRAM).build()
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("menu", comando_menu))
-    app.add_handler(CallbackQueryHandler(callback_menu, pattern="menu_.*|del_.*"))
-    app.add_handler(CallbackQueryHandler(consentimiento_callback, pattern="consent_.*"))
-    app.add_handler(CallbackQueryHandler(callback_facultad, pattern="fac_.*"))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, manejar_mensaje))
-    logger.info("Serenity está en línea...")
-    app.run_polling()
+    global telegram_app
 
+    crear_base_datos()
+
+    if not TOKEN_TELEGRAM:
+        raise RuntimeError("Falta TELEGRAM_TOKEN en variables de entorno")
+
+    telegram_app = Application.builder().token(TOKEN_TELEGRAM).build()
+    telegram_app.add_handler(CommandHandler("start", start))
+    telegram_app.add_handler(CommandHandler("menu", comando_menu))
+    telegram_app.add_handler(CallbackQueryHandler(callback_menu, pattern="menu_.*|del_.*"))
+    telegram_app.add_handler(CallbackQueryHandler(consentimiento_callback, pattern="consent_.*"))
+    telegram_app.add_handler(CallbackQueryHandler(callback_facultad, pattern="fac_.*"))
+    telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, manejar_mensaje))
+    loop = asyncio.get_event_loop()
+    loop.create_task(telegram_app.initialize())
+    loop.create_task(configurar_webhook())
+    loop.create_task(telegram_app.start())
+    flask_app.run(host="0.0.0.0", port=10000)
 
 if __name__ == "__main__":
+    import asyncio
     main()
